@@ -22,10 +22,7 @@ const generateItems = (count: number): Item[] => {
   return items;
 };
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<PaginatedResponse>
-) {
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const { page = 1, limit = 10, totalItems = 100 } = req.body;
     const items = generateItems(Number(totalItems));
@@ -34,13 +31,15 @@ export default function handler(
     const endIndex = startIndex + Number(limit);
     const paginatedItems = items.slice(startIndex, endIndex);
 
-    res.status(200).json({
+    const response: PaginatedResponse = {
       page: Number(page),
       limit: Number(limit),
       totalItems: items.length,
       totalPages: Math.ceil(items.length / Number(limit)),
       items: paginatedItems,
-    });
+    };
+
+    res.status(200).json(response);
   } else {
     res.status(405).json({ message: "Method Not Allowed" });
   }

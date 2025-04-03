@@ -24,7 +24,7 @@ const generateItems = (count: number, req: NextApiRequest): Item[] => {
 
   for (let i = 1; i <= count; i++) {
     items.push({
-      id: `{$i}file`,
+      id: `${i}file`,
       name: `Item ${i}`,
       category: "category1",
       url: baseUrl,

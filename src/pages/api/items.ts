@@ -26,18 +26,22 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<PaginatedResponse>
 ) {
-  const { page = 1, limit = 10, totalItems = 100 } = req.query;
-  const items = generateItems(Number(totalItems));
+  if (req.method === "POST") {
+    const { page = 1, limit = 10, totalItems = 100 } = req.body;
+    const items = generateItems(Number(totalItems));
 
-  const startIndex = (Number(page) - 1) * Number(limit);
-  const endIndex = startIndex + Number(limit);
-  const paginatedItems = items.slice(startIndex, endIndex);
+    const startIndex = (Number(page) - 1) * Number(limit);
+    const endIndex = startIndex + Number(limit);
+    const paginatedItems = items.slice(startIndex, endIndex);
 
-  res.status(200).json({
-    page: Number(page),
-    limit: Number(limit),
-    totalItems: items.length,
-    totalPages: Math.ceil(items.length / Number(limit)),
-    items: paginatedItems,
-  });
+    res.status(200).json({
+      page: Number(page),
+      limit: Number(limit),
+      totalItems: items.length,
+      totalPages: Math.ceil(items.length / Number(limit)),
+      items: paginatedItems,
+    });
+  } else {
+    res.status(405).json({ message: "Method Not Allowed" });
+  }
 }

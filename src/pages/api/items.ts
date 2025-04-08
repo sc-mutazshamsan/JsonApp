@@ -95,14 +95,14 @@ const generateItems = (count: number, req: NextApiRequest): Item[] => {
     items.push({
       id: guidList[i],
       name: `Item ${i}`,
-      url: `${baseUrl}en/Item${i}`,
+      url: `${baseUrl}en-us/Item${i}`,
       locale: "en_us",
     });
 
     items.push({
       id: guidList[i],
       name: `${i} العنصر`,
-      url: `${baseUrl}ar/Item${i}`,
+      url: `${baseUrl}ar-ae/Item${i}`,
       locale: "ar_ae",
     });
   }

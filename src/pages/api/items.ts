@@ -110,8 +110,8 @@ const generateItems = (count: number, req: NextApiRequest): Item[] => {
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === "POST") {
-    const { page = 1, limit = 10, totalItems = 100 } = req.body;
+  if (req.method === "GET") {
+    const { page = 1, limit = 10, totalItems = 100 } = req.query;
     const items = generateItems(Number(totalItems), req);
 
     const startIndex = (Number(page) - 1) * Number(limit);
